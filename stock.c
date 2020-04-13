@@ -40,7 +40,7 @@ void creat_s(int nu,char*na,char*o,int pr,int a){
    #endif 
   }
   else{
-    printf("공간이 부족합니다");
+    printf("공간이 부족합니다\n");
    #ifdef DEBUG
     printf("count=%d\n",count_s());
    #endif 
@@ -64,9 +64,16 @@ void put_all_s(int n){
     }
   printf("Income : %d \n",income);
 }
-void m_update(store* p, char* na, char*o,int pr, int a){
+void update_s(store* p, char*o,int pr, int a){
+    strcpy(p->origin, o);
+    p->price = pr;
+    p->amount = a;
+#ifdef DEBUG
+    printf("updated %s\n", p->name);
+#endif // DEBUG
 }
 void print_s(store* p){
+	printf("재고번호: %d / 제품명: %s / 원산지: %s / 가격: %d / 수량: %d \n", p->num, p->name, p->origin, p->price, p->amount);
 }
 store* find_n(char *n){
   for(int i=0;i<count_s();i++){
@@ -82,14 +89,48 @@ store* find_n(char *n){
    #endif 
   return 0;
 }
-void plus_a(int a){
-
+void plus_i(store *p,int a){
+    if (p->amount > a) {
+        p->amount -= a;
+        income += p->price * a;
+        printf("Income : %d\n", income);
+    }
+    else {
+        printf("재고 수량이 부족합니다.\n");
+    }
 }
-int remove_a(int a){
-
+void remove_i(store *p,int a){
+    if (p->price * a < income) {
+        p->amount += a;
+        income -= p->price * a;
+        printf("Income : %d\n", income);
+    }
+    else {
+        printf("돈이 부족합니다.\n");
+    }
 }
-int delete_s(int n){
-
+void delete_s(int n){
+     int i=count_s()-1;
+     n--;
+     store*p;
+      while (1) {
+        if (i==n) {
+        p=stock[n];
+	free(p);
+	stock[n]=NULL;
+	break;
+        }
+	else{
+        strcpy(stock[n]->name,stock[n+1]->name);
+        strcpy(stock[n]->origin,stock[n+1]->origin);
+        stock[n]->price = stock[n+1]->price;
+        stock[n]->amount = stock[n+1]->amount;
+	}
+#ifdef DEBUG
+        printf("%s change to %s\n", stock[n]->name, stock[n+1]->name);
+#endif 
+        n++;
+    }
 }
 void search_n(char* s,int n){
   int i,count=0;

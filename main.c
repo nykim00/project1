@@ -59,13 +59,54 @@ void List(){
   put_all_s(n);
 }
 void Update(){
-
+    store* p;
+    int amount, price;
+    char name[20], origin[20];
+    printf("변경할 재고 제품명? ");
+    scanf("%s", name);
+    p=find_n(name); 
+    if (p) {
+        printf("변경된 재고 원산지? ");
+        scanf("%s", origin);
+        printf("변경된 재고 가격? ");
+        scanf("%d", &price);
+        printf("변경된 재고 수량? ");
+        scanf("%d", &amount);
+        update_s(p, origin, price, amount);
+        printf("재고 정보가 변경되었습니다.\n");
+        print_s(p);
+    }
+    else printf("제품을 찾지 못했습니다\n");
 }
 void Import(){
-
+    int n;
+    char na[20];
+    store* p;
+    printf("수입할 제품명은? ");
+    scanf("%s",na);
+    p = find_n(na);
+    if (p) {
+        print_s(p);
+        printf("수입할 수량은? ");
+        scanf("%d", &n);
+        remove_i(p, n);
+    }
+    else printf("제품을 찾지 못했습니다.\n");
 }
 void Export(){
-
+    int n;
+    char na[20];
+    store* p;
+    printf("수출할 제품명은? ");
+    scanf("%s",na);
+    p = find_n(na);
+    if (p) {
+        print_s(p);
+        printf("수출할 수량은? ");
+        scanf("%d", &n);
+        plus_i(p, n);
+    }
+    else printf("제품을 찾지 못했습니다.\n");
 }
 void Search(){
   int n;
@@ -76,7 +117,22 @@ void Search(){
   search_n(name,n);
 }
 void Delete(){
-
+   char name[20],an;
+    store* p;
+    printf("삭제할 재고 제품명? ");
+    scanf("%s", name);
+    p = find_n(name);
+    if (p) {
+        print_s(p);
+        printf("정말 삭제하시겠습니까?(Y/N)");
+	getchar();
+        scanf("%c", &an);
+        if (an == 'Y') {
+            delete_s(p->num);
+            printf("삭제가 완료되었습니다.");
+        }
+    }
+    else printf("제품을 찾지 못했습니다.\n");
 }
 void Save(){
   save_file();

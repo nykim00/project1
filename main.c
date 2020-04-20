@@ -129,7 +129,7 @@ void Delete(){
         scanf("%c", &an);
         if (an == 'Y') {
             delete_s(p->num);
-            printf("삭제가 완료되었습니다.");
+            printf("삭제가 완료되었습니다.\n");
         }
     }
     else printf("제품을 찾지 못했습니다.\n");

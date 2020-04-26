@@ -90,7 +90,7 @@ store* find_n(char *n){
   return 0;
 }
 void plus_i(store *p,int a){
-    if (p->amount > a) {
+    if (p->amount >= a) {
         p->amount -= a;
         income += p->price * a;
         printf("Income : %d\n", income);
@@ -100,7 +100,7 @@ void plus_i(store *p,int a){
     }
 }
 void remove_i(store *p,int a){
-    if (p->price * a < income) {
+    if (p->price * a <= income) {
         p->amount += a;
         income -= p->price * a;
         printf("Income : %d\n", income);
